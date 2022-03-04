@@ -1,0 +1,24 @@
+uat_url:
+  http://gateway-uat.yigongpin.net
+uat:
+  host:
+    172.16.0.16
+  user:
+    uat_test_rw
+  password:
+    ygp!@#2022
+  database:
+    uc
+
+test3_url:
+  http://mws-test3.yigongpin.net
+test1:
+  host:
+    test1.yigongpin.net
+  user:
+    root
+  password:
+    ygp123456
+  database:
+    uc
+
