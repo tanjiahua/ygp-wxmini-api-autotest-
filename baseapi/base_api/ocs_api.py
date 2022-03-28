@@ -12,7 +12,7 @@ from common.common import  write_yaml
 
 
 class Osc_Api():
-    base_url = yaml.safe_load(open('./test_data/ocs_env.yaml', 'r', encoding="utf-8"))["test3_url"]
+    base_url = yaml.safe_load(open('./test_data/ocs_env.yaml', 'r', encoding="utf-8"))["uat_url"]
 
     def login(self,phone,password):
         url = self.base_url +'/api/uc/login/adminLogin'

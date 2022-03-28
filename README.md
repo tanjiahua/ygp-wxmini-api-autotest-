@@ -21,7 +21,7 @@ http://wiki.yigongpin.net/confluence/pages/viewpage.action?pageId=34509012
 
 一键安装依赖项目命令，如果有安装包安装失败，请单独执行“pip install 包名”
 
-pip install -r requirement.txt 
+pip install -r requirements.txt 
 
 **本地执行测试用例,并生产测试报告在allure中**
 

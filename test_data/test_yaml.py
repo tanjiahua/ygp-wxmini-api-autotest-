@@ -12,3 +12,10 @@ def test_yaml():
     data = yaml.safe_load(open('account.yaml', 'r', encoding="utf-8"))
     print(data['phone'])
     print(time.strftime("%Y-%m-%d", time.localtime()))
+
+def test_data():
+    for num in range(1, 10):
+        for i in range(1, num):
+            print(num)
+            sum=i*num
+            print('%d * %d = %d' % (i, num, sum))

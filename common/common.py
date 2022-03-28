@@ -4,22 +4,14 @@
 @Auth ： tanjiahua
 @Email : tanjiahua@gongpin.com
 """
+import base64
+import hashlib
 import pymysql
 import redis
 import rsa
 import yaml
 import os
-import sys
-curPath = os.path.abspath(os.path.dirname(__file__))
-rootpath=str(curPath)
-syspath=sys.path
-depth = rootpath.count("\\") - 1
-sys.path=[]
-sys.path.append(rootpath)#将工程根目录加入到python搜索路径中
-sys.path.extend([rootpath+i for i in os.listdir(rootpath) if i[depth]!="."])#将工程目录下的一级目录添加到python搜索路径中
-sys.path.extend(syspath)
-
-
+path = os.path.dirname(os.path.abspath(__file__))
 
 def link_redis(key,env_mark):
     dict = yaml.safe_load(open('./test_data/env.yaml', 'r', encoding="utf-8"))
@@ -54,7 +46,6 @@ def insert_args(sql, env_mark, args):
     conn = link_mysql(env_mark)
     cur = conn.cursor()
     result = cur.execute(sql, args)
-    print(result)
     conn.commit()
     cur.close()
     conn.close()
@@ -100,13 +91,6 @@ def delete(sql, env_mark):
     conn.close()
     return result
 
-
-def rsa_encrypt(message):
-    with open('rsa_public_key.pem','r') as f:
-        pubkey = rsa.PublicKey.load_pkcs1(f.read().encode())
-        text = rsa.encrypt(message.encode(), pubkey)
-    return text
-
 def write_yaml(file, data, encoding="utf-8"):
     "写入Yaml"
     with open(file, encoding=encoding, mode="w") as f:
@@ -117,6 +101,17 @@ def read_yaml(file, encoding="utf-8"):
     data=yaml.safe_load(open(file, 'r', encoding=encoding))
     return data
 
+def MD5(data):
+    md5 = hashlib.md5()
+    md5.update(data.encode(encoding="utf-8"))
+    res_data=md5.hexdigest()
+    return res_data
+
+def write_data(token):
+    from ruamel import yaml
+    data = {'wxmini_token': token}
+    with open('./test_data/wxmini_token.yaml', 'r+', encoding="utf-8") as f:
+        f.write(yaml.dump(data, Dumper=yaml.RoundTripDumper))
 
 # link_mysql("test1")
 # print(link_redis("15746289471","test1"))
@@ -132,3 +127,5 @@ def read_yaml(file, encoding="utf-8"):
 
 # phone=15700001001
 # query("select `password` from uc_user where account='%d';"%phone,"test1")
+# insert("INSERT INTO `ygp_udc`.`browsing_record`( `user_code`, `sku_code`, `date_value`, `create_time`, `update_time`, `active`, `creator`, `creator_code`, `updater`, `updater_code`) VALUES ( 'UC1496317675387289601', 'MFD00021', '2022-03-15', '2022-03-15 17:39:58.000', '2022-03-15 17:39:58.000', 1, '15700001001', 'UC1496317675387289601', '15700001001', '15700001001');"
+#     ,"test1")
